@@ -1,0 +1,87 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class LanguageLand {
+    private static Map<String, Map<String, String>> languages = new HashMap<>();
+
+    public static void main(String[] args) {
+        // Initialize language translations
+        initializeTranslations();
+
+        // Welcome message
+        System.out.println("Welcome to Language Land!");
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            // Prompt user to choose a language
+            System.out.println("Select a language to learn:");
+            int i = 1;
+            for (String language : languages.keySet()) {
+                System.out.println(i + ". " + language);
+                i++;
+            }
+            System.out.println("0. Exit");
+
+            // Read user input
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (choice == 0) {
+                // Exit the program
+                break;
+            } else if (choice > 0 && choice <= languages.size()) {
+                // Get selected language
+                String selectedLanguage = (String) languages.keySet().toArray()[choice - 1];
+
+                // Start learning
+                learnLanguage(selectedLanguage, scanner);
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+        System.out.println("Goodbye!");
+        scanner.close();
+    }
+
+    private static void learnLanguage(String language, Scanner scanner) {
+        Map<String, String> translations = languages.get(language);
+
+        System.out.println("Welcome to " + language + "!");
+        System.out.println("Enter a word in English to translate, or type 'exit' to return to Language Land.");
+
+        while (true) {
+            // Prompt user for input
+            System.out.print("English: ");
+            String input = scanner.nextLine();
+
+            if (input.equalsIgnoreCase("exit")) {
+                // Exit learning session
+                System.out.println("Returning to Language Land...");
+                break;
+            }
+
+            // Translate word
+            String translation = translations.getOrDefault(input, "Translation not found");
+            System.out.println(language + ": " + translation);
+        }
+    }
+
+    private static void initializeTranslations() {
+        // English to Spanish translations
+        Map<String, String> englishToSpanish = new HashMap<>();
+        englishToSpanish.put("hello", "hola");
+        englishToSpanish.put("goodbye", "adiós");
+        englishToSpanish.put("cat", "gato");
+        languages.put("Spanish", englishToSpanish);
+
+        // English to French translations
+        Map<String, String> englishToFrench = new HashMap<>();
+        englishToFrench.put("hello", "bonjour");
+        englishToFrench.put("goodbye", "au revoir");
+        englishToFrench.put("cat", "chat");
+        languages.put("French", englishToFrench);
+    }
+}
