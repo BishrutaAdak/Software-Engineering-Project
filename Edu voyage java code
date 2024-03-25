@@ -1,0 +1,63 @@
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
+
+public class EduVoyage {
+    private static Map<String, String> places = new HashMap<>();
+
+    public static void main(String[] args) {
+        // Initialize places
+        initializePlaces();
+
+        // Welcome message
+        System.out.println("Welcome to Edu Voyage - Explore the World!");
+
+        Scanner scanner = new Scanner(System.in);
+
+        while (true) {
+            // Prompt user to choose a place to visit
+            System.out.println("Select a place to visit:");
+            int i = 1;
+            for (String place : places.keySet()) {
+                System.out.println(i + ". " + place);
+                i++;
+            }
+            System.out.println("0. Exit");
+
+            // Read user input
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            if (choice == 0) {
+                // Exit the program
+                break;
+            } else if (choice > 0 && choice <= places.size()) {
+                // Get selected place
+                String selectedPlace = (String) places.keySet().toArray()[choice - 1];
+
+                // Start virtual tour
+                visitPlace(selectedPlace, scanner);
+            } else {
+                System.out.println("Invalid choice. Please try again.");
+            }
+        }
+
+        System.out.println("Goodbye!");
+        scanner.close();
+    }
+
+    private static void visitPlace(String place, Scanner scanner) {
+        // For simplicity, just print the selected place
+        System.out.println("Welcome to " + place + "!");
+        System.out.println("Press Enter to continue...");
+        scanner.nextLine();
+    }
+
+    private static void initializePlaces() {
+        // Add places to visit
+        places.put("Eiffel Tower", "Paris, France");
+        places.put("Great Wall of China", "China");
+        places.put("Taj Mahal", "Agra, India");
+        // Add more places as needed
+    }
+}
